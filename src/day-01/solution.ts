@@ -18,6 +18,27 @@ export function solvePartOne(input: string[]): number {
   return distances.reduce((acc, item) => acc + item, 0);
 }
 
+export function solvePartTwo(input: string[]): number {
+  let similarityScore = 0;
+  const { leftList, rightList } = processInput(input);
+  const rightListMap: Record<string, number> = {};
+
+  rightList.forEach((item) => {
+    if (rightListMap[item]) {
+      console.log(rightListMap);
+      rightListMap[item]++;
+    } else {
+      rightListMap[item] = 1;
+    }
+  });
+
+  leftList.forEach((item) => {
+    similarityScore += item * (rightListMap[item] ?? 0);
+  });
+
+  return similarityScore;
+}
+
 function processInput(inputArray: string[]): {
   leftList: number[];
   rightList: number[];
